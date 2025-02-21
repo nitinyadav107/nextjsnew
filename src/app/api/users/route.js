@@ -6,25 +6,17 @@ import { NextResponse } from "next/server";
 connectDb();
 
 
-export function GET(request) {
-  const users = [{
-    name: "hitesh",
-    phone: "1234567890",
-    course: "MERN"
-  },
-  {
-    name: "vicky",
-    phone: "1234567890",
-    course: "MERN"
+export async function GET(request) {
+  let users = [];
+
+  try {
+    users = await User.find().select("-password");
+    return NextResponse.json({ message: "users found", status: true, users }, { status: 200, statusText: "ok" });
+  } catch (error) {
+    return NextResponse.json({ message: "user not found", status: false }, { status: 400, statusText: "bad request" });
   }
-    ,
-  {
-    name: "somu",
-    phone: "1234567890",
-    course: "MERN"
-  }
-  ];
-  return NextResponse.json(users);
+
+ 
 }
 
 
@@ -45,11 +37,6 @@ export async function POST(request) {
   }
 }
   
-export function DELETE(request) {
-  console.log("deleted");
-  return NextResponse.json({ message: "deleted", status: true }, { status: 200, statusText: "deleted" })
-
-}
 export function PUT() {
 
 }
