@@ -1,6 +1,10 @@
 import mongoose, { Schema } from "mongoose";
 
 const TaskSchema = new Schema({
+  image: {
+    type:String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,

@@ -1,21 +1,27 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import UserContext from "../../context/userContext";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
-
-
-export default function Home() {
+const ShowTask = () => {
+  const { user } = useContext(UserContext);
+  const userId = user?.id;
   const router = useRouter();
+
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+
   useEffect(() => {
+    if (!userId) return;
+
     const fetchTasks = async () => {
       try {
-        const response = await axios.get("/api/tasks");
-        setTasks(response.data.tasks);
+        const response = await axios.get(`/api/users/${userId}/tasks`);
+        setTasks(response.data);
       } catch (err) {
         setError("Failed to fetch tasks.");
       } finally {
@@ -24,12 +30,43 @@ export default function Home() {
     };
 
     fetchTasks();
-  }, []);
+  }, [userId]);
+
+
+  const deleteTask = async (taskId) => {
+    try {
+      const response = await axios.delete(`/api/tasks/${taskId}`);
+
+      if (response.data.status === true) {
+        toast.success("Task deleted successfully!");
+        setTasks((prevTasks) => prevTasks.filter(task => task._id !== taskId));
+      } else {
+        toast.error("Failed to delete task!");
+      }
+    } catch (error) {
+      toast.error("Something went wrong!");
+    }
+  };
+  const update=async(taskId)=>{
+    try {
+      const response = await axios.put(`/api/tasks/${taskId}`);
+  
+      if (response.data.status === true) {
+        toast.success("Task updated successfully!");
+        setTasks((prevTasks) => prevTasks.filter(task => task._id !== taskId));
+      } else {
+        toast.error("Failed to update task!");
+      }
+    } catch (error) {
+      toast.error("Something went wrong!");
+    }
+  }
+
 
   return (
     <div className="max-w-6xl mx-auto mt-10 mb-10 px-6">
       <h2 className="text-4xl font-bold text-center mb-8 text-white">
-        All Blogs
+        Your Blogs
       </h2>
 
       {loading ? (
@@ -56,7 +93,7 @@ export default function Home() {
                 style={{
                   display: "-webkit-box",
                   WebkitBoxOrient: "vertical",
-                  WebkitLineClamp: 2, 
+                  WebkitLineClamp: 2, // Limits title to 2 lines
                   overflow: "hidden",
                 }}
               >
@@ -67,18 +104,24 @@ export default function Home() {
                 style={{
                   display: "-webkit-box",
                   WebkitBoxOrient: "vertical",
-                  WebkitLineClamp: 3, // Content limited to 3 lines
+                  WebkitLineClamp: 3, // Limits content to 3 lines
                   overflow: "hidden",
                 }}
               >
                 {task.content}
               </p>
-              <div className="mt-4">
+              <div className="mt-4 gap-4 flex">
                 <button
                   className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-all"
                   onClick={() => router.push(`/task/${task._id}`)}
                 >
                   Read More
+                </button>
+                <button
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-all"
+                  onClick={()=>deleteTask(task._id)}
+                >
+                  Delete
                 </button>
               </div>
             </div>
@@ -89,4 +132,6 @@ export default function Home() {
       )}
     </div>
   );
-}
+};
+
+export default ShowTask;
