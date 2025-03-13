@@ -1,15 +1,13 @@
-async function takeTime() {
-  await new Promise((resolve) => {
+const takeTime = async () => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      resolve('done');
+      console.log("Loading done!"); // Debug log
+      resolve();
     }, 3000);
   });
-}
+};
 
 export default async function About() {
-  await takeTime();
-  throw new Error('something went wrong');
-  return (
-    <div>this is about page</div>
-  );
+  await takeTime();  // No error is thrown here
+  return <div>About Page</div>;
 }
