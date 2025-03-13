@@ -74,21 +74,21 @@ const AddTask = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-900">
-      <div className="w-full max-w-lg mx-auto mt-20 mb-10 p-6 bg-gray-800 text-white shadow-lg rounded-lg">
-        <h1 className="text-3xl font-bold text-center mb-6">Add Task</h1>
+    <div className="flex min-h-screen items-center justify-center bg-black">
+      <div className="w-full max-w-lg mx-auto mt-20 mb-10 p-6 bg-slate-900 text-white shadow-lg rounded-lg">
+        <h1 className="text-3xl font-bold text-center mb-6">Add Blog</h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Task Title */}
           <div>
             <label htmlFor="title" className="block font-medium mb-1">
-              Task Title
+              Blog Title
             </label>
             <input
               type="text"
               id="title"
               name="title"
-              placeholder="Enter task title"
+              placeholder="Enter blog title"
               value={formData.title}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -99,12 +99,12 @@ const AddTask = () => {
           {/* Task Description */}
           <div>
             <label htmlFor="content" className="block font-medium mb-1">
-              Task Description
+              Blog Description
             </label>
             <textarea
               id="content"
               name="content"
-              placeholder="Enter task description"
+              placeholder="Enter blog description"
               value={formData.content}
               onChange={handleInputChange}
               rows="4"
@@ -114,7 +114,7 @@ const AddTask = () => {
           </div>
 
           {/* Task Status */}
-          <div>
+          {/* <div>
             <label htmlFor="status" className="block font-medium mb-1">
               Status
             </label>
@@ -129,7 +129,7 @@ const AddTask = () => {
               <option value="completed">Completed</option>
               <option value="just created">Just Created</option>
             </select>
-          </div>
+          </div> */}
 
           {/* Image Upload */}
           <div>

@@ -50,7 +50,7 @@ const AuthPage = () => {
   console.log(isSignUp, "outside")
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-800">
+    <div className="flex min-h-screen items-center justify-center bg-sblack">
       <div className="w-full max-w-md bg-slate-900 text-white shadow-xl rounded-lg p-8">
         <h2 className="text-2xl font-bold text-white text-center mb-6">
           {isSignUp ? "Sign Up" : "Login"}

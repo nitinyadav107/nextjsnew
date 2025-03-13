@@ -4,12 +4,13 @@ import { useParams } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-toastify";
 import UserContext from "../../../context/userContext";
-import { set } from "mongoose";
+
 
 const TaskDetail = () => {
   const {user}=useContext(UserContext);
   console.log(user,"from task detail");
   const { id } = useParams();
+  console.log(id);
   const [task, setTask] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -108,7 +109,7 @@ const TaskDetail = () => {
               <pre className="text-gray-300 whitespace-pre-wrap break-words font-sans">
                 {task.content}
               </pre>
-              {user.id===userId &&
+              {user?.id===userId &&
                  <button
                  onClick={() => setIsEditing(true)}
                  className="mt-4 bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded"
