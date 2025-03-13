@@ -1,7 +1,7 @@
 import { Task } from "../../../../../models/task";
 import { NextResponse } from "next/server";
 export async function GET(request, { params }) {
-  const { userId } = params;
+  const { userId } = await params;
   try {
     const tasks = await Task.find({ userId: userId });
     return NextResponse.json(tasks);

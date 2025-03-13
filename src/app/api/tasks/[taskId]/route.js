@@ -2,7 +2,7 @@ import { Task } from "../../../../models/task";
 import { NextResponse } from "next/server";
 
 export async function GET(request,{params}) {
-  const { taskId } = params;
+  const { taskId } =await params;
   try{
     const task = await Task.findById(taskId);
     return NextResponse.json(task);
@@ -16,7 +16,7 @@ export async function POST(request) {
   
 }
 export async function PUT(request,{params}) {
-  const { taskId } = params;
+  const { taskId } =await params;
   const { title, content,status } = await request.json();
   try {
     const task = await Task.findByIdAndUpdate(taskId, { title, content, status }, { new: true });
@@ -28,7 +28,7 @@ export async function PUT(request,{params}) {
   
 }
 export async function DELETE(request,{params}) {
-  const { taskId } = params;
+  const { taskId } = await params;
   try {
     const task = await Task.findByIdAndDelete(taskId);
     return NextResponse.json({ message: "task deleted", status: true, task }, { status: 200 });
